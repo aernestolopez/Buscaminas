@@ -14,11 +14,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialogo();
 
-        crearTabla(8);
+        crearTabla(8, matriz(8,10));
     }
 
     public void dialogo(){
@@ -81,16 +79,15 @@ public class MainActivity extends AppCompatActivity {
                 int eleccion=i;
             switch(eleccion){
                 case 0:
-                    crearTabla(8);
-                    matriz(8,10);
+                    crearTabla(8, matriz(8,10));
+
                     break;
                 case 1:
-                    crearTabla(12);
-                    matriz(12,30);
+                    crearTabla(12, matriz(12, 30));
                     break;
                 case 2:
-                    crearTabla(16);
-                    matriz(16,60);
+                    crearTabla(16,  matriz(16,60));
+
                     break;
             }
             }
@@ -99,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                crearTabla(8);
+                crearTabla(8, matriz(8,10));
             }
         });
 
@@ -108,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void crearTabla(int num){
+    public void crearTabla(int num, ArrayList<Integer> matriz){
         tableLayout.removeAllViews();
         for(int i=0;i<num;i++){
             //Creamos fila
@@ -123,19 +120,32 @@ public class MainActivity extends AppCompatActivity {
 
             for(int j=0;j<num;j++){
                 // Creamos botón
-                ImageButton imagenboton=new ImageButton(getApplicationContext());
-                imagenboton.setId(View.generateViewId());
+                if(matriz.get(j)!=-1){
+                    Button boton=new Button(getApplicationContext());
+                    boton.setId(View.generateViewId());
+                    boton.setText(matriz.get(j).toString());
+                    //Creamos Params
+                    TableRow.LayoutParams lpBoton2=new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,TableRow.LayoutParams.WRAP_CONTENT);
+                    lpBoton2.weight=1;
+                    //Asignamos Params
+                    boton.setLayoutParams(lpBoton2);
+                    fila.addView(boton);
+                }if (matriz.get(j)==-1){
+                    ImageButton imagenboton = new ImageButton(getApplicationContext());
+                    imagenboton.setId(View.generateViewId());
 
 
-                //Creamos params
-                TableRow.LayoutParams lpBoton=new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.MATCH_PARENT);
-                lpBoton.weight=1;
+                    //Creamos params
+                    TableRow.LayoutParams lpBoton = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
+                    lpBoton.weight = 1;
 
-                //Asignamos parámetros
-                imagenboton.setLayoutParams(lpBoton);
+                    //Asignamos parámetros
+                    imagenboton.setLayoutParams(lpBoton);
 
-                //Añadir botón a fila
-                fila.addView(imagenboton);
+
+                    //Añadir botón a fila
+                    fila.addView(imagenboton);
+                }
             }
 
             tableLayout.addView(fila);
@@ -143,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void matriz(int tablero, int minas){
+    public ArrayList<Integer> matriz(int tablero, int minas){
         ArrayList<Integer> matriz=new ArrayList<Integer>();
         for(int i=0; i<tablero*2; i++){
             matriz.add(0);
@@ -152,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
             matriz.add(-1);
         }
         Collections.shuffle(matriz);
+
         System.out.println(Arrays.toString(matriz.toArray()));
+        return matriz;
     }
 }
