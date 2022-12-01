@@ -16,6 +16,11 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+
 public class MainActivity extends AppCompatActivity {
 
     TableLayout tableLayout;
@@ -77,12 +82,15 @@ public class MainActivity extends AppCompatActivity {
             switch(eleccion){
                 case 0:
                     crearTabla(8);
+                    matriz(8,10);
                     break;
                 case 1:
                     crearTabla(12);
+                    matriz(12,30);
                     break;
                 case 2:
                     crearTabla(16);
+                    matriz(16,60);
                     break;
             }
             }
@@ -133,5 +141,17 @@ public class MainActivity extends AppCompatActivity {
             tableLayout.addView(fila);
 
         }
+    }
+
+    public void matriz(int tablero, int minas){
+        ArrayList<Integer> matriz=new ArrayList<Integer>();
+        for(int i=0; i<tablero*2; i++){
+            matriz.add(0);
+        }
+        for(int i=0; i<minas; i++){
+            matriz.add(-1);
+        }
+        Collections.shuffle(matriz);
+        System.out.println(Arrays.toString(matriz.toArray()));
     }
 }
