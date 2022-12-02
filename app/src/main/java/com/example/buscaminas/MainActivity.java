@@ -21,23 +21,28 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
-
+    //Declaracion de variables
     TableLayout tableLayout;
     ArrayList<Integer> matriz=new ArrayList<Integer>();
+    int cosa=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Relacionamos la variable con el tablelayout
         tableLayout=findViewById(R.id.tl);
-
+        //Mostramos el dialogo de instrucciones
         dialogo();
-
+        //creamos la matriz
         matriz(8,10);
+        //Creamos el tablero
         crearTabla(8);
 
     }
 
+    /**
+     * Creacion de metodo para mostrar las instrucciones
+     */
     public void dialogo(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Instrucciones");
@@ -49,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    /**
+     * Inflamos el menu
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -56,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * Creamos los casos para los diferentes items seleccionados
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int n=item.getItemId();
@@ -72,6 +87,10 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /**
+     * Metodo para configurar la dificultad
+     */
     public void configurarDificultad(){
         final String[] dificultad={"Amateur", "Normal", "Dificil"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -109,12 +128,15 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
         AlertDialog dialog = builder.create();
         dialog.show();
 
     }
 
+    /**
+     * Metodo para crear el tablelayout y los botones mediane codigo
+     * @param num
+     */
     public void crearTabla(int num){
         int k=0;
         tableLayout.removeAllViews();
@@ -132,47 +154,74 @@ public class MainActivity extends AppCompatActivity {
             for(int j=0;j<num;j++){
                 // Creamos botón
                 if(matriz.get(k)!=-1){
+
                     Button boton=new Button(getApplicationContext());
-                    boton.setId(matriz.get(k));
-                    boton.setText(""+matriz.get(k));
+                    //Asignamos el id
+                    boton.setId(View.generateViewId());
+
+                    //Asignamos el numero
+                   //boton.setText(""+matriz.get(k));
+                    //Asignamos el tamaño del texto
                     boton.setTextSize(25-num);
+
                     //Creamos Params
                     TableRow.LayoutParams lpBoton2=new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT,TableRow.LayoutParams.MATCH_PARENT);
                     lpBoton2.weight=1;
+
                     //Asignamos Params
                     boton.setLayoutParams(lpBoton2);
+
+                    int finalK = k;
+                    boton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v)
+                        {
+                            boton.setText(""+ matriz.get(finalK));
+
+                        }
+                    });
+
+                    //Creamos el metodo para un click largo
                     boton.setOnLongClickListener(this::bandera2);
+
+                    //Añadimos el boton en la fila
                     fila.addView(boton);
+
                 }if (matriz.get(k)==-1){
+                    //Creamos imagebutton
                     ImageButton imagenboton = new ImageButton(getApplicationContext());
                     imagenboton.setId(View.generateViewId());
-
 
                     //Creamos params
                     TableRow.LayoutParams lpBoton = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                     lpBoton.weight = 1;
 
-
                     //Asignamos parámetros
                     imagenboton.setLayoutParams(lpBoton);
+
+                    //Creamos el metodo para mostrar la bomba
                     imagenboton.setOnClickListener(this::bomba);
+
+                    //Creamos el metodo para mostrar la bandera
                     imagenboton.setOnLongClickListener(this::bandera);
+
+                    //Añadimos dimensiones de las imagenes
                     imagenboton.setMaxHeight(15);
                     imagenboton.setMaxHeight(15);
                     imagenboton.setAdjustViewBounds(true);
                     imagenboton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-
                     //Añadir botón a fila
                     fila.addView(imagenboton);
                 }
             k++;}
-
             tableLayout.addView(fila);
-
         }
     }
-
+    /**
+     * Metodod para crear la matriz
+     * @param tablero
+     * @param minas
+     */
     public void matriz(int tablero, int minas){
 
         for(int i=0; i<tablero*tablero; i++){
@@ -181,19 +230,20 @@ public class MainActivity extends AppCompatActivity {
         for(int j=0; j<minas; j++){
             matriz.set(j,-1);
         }
-
         Collections.shuffle(matriz);
-
-        System.out.println(Arrays.toString(matriz.toArray()));
     }
 
+    /**
+     * Metodo para mostrar la bomba
+     * @param view
+     */
     public void bomba(View view){
         int id=view.getId();
         ImageButton ib =findViewById(id);
         ib.setImageResource(R.drawable.bomba);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       /* AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("Has perdido");
+       builder.setTitle("Has perdido");
         builder.setMessage("Has detonado una bomba, más suerte la próxima vez");
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
@@ -202,22 +252,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.show();
-
-
+        dialog.show();*/
     }
 
+    /**
+     * Metodo para mostrar la bandera
+     * @param view
+     * @return
+     */
     public boolean bandera(View view){
         int id=view.getId();
         ImageButton ib =findViewById(id);
         ib.setImageResource(R.drawable.flag);
         ib.setEnabled(false);
-        return false;
+        return true;
     }
 
+    /**
+     * Metodo para mostrar la bandera
+     * @param view
+     * @return
+     */
     public boolean bandera2(View view){
-        int idB=view.getId();
-        Button b=findViewById(idB);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Has perdido");
         builder.setMessage("Has puesto una bandera en un sitio sin bomba");
@@ -229,6 +285,6 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-        return false;
+        return true;
     }
 }
