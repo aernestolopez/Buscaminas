@@ -15,15 +15,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * @author ernesto
+ */
 public class MainActivity extends AppCompatActivity {
     //Declaracion de variables
     TableLayout tableLayout;
     ArrayList<Integer> matriz=new ArrayList<Integer>();
+    int bandera;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Aceptar", null);
 
         AlertDialog dialog = builder.create();
+        //Evitamos que el usuario pueda seguir jugando si intenta tocar fuera del alert dialog
+        dialog.setCancelable(false);
         dialog.show();
     }
 
@@ -123,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
+        //Evitamos que el usuario pueda seguir jugando si intenta tocar fuera del alert dialog
+        dialog.setCancelable(false);
         dialog.show();
     }
 
@@ -163,7 +172,6 @@ public class MainActivity extends AppCompatActivity {
 
                     //Asignamos Params
                     boton.setLayoutParams(lpBoton2);
-
                     int finalK = k;
                     boton.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v)
@@ -172,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
                             boton.setEnabled(false);
                         }
                     });
-
                     //Creamos el metodo para un click largo
                     boton.setOnLongClickListener(this::bandera2);
 
@@ -194,8 +201,26 @@ public class MainActivity extends AppCompatActivity {
                     //Creamos el metodo para mostrar la bomba
                     imagenboton.setOnClickListener(this::bomba);
 
+
                     //Creamos el metodo para mostrar la bandera
-                    imagenboton.setOnLongClickListener(this::bandera);
+
+                    imagenboton.setOnLongClickListener(new View.OnLongClickListener() {
+
+                        @Override
+                        public boolean onLongClick(View view) {
+                            imagenboton.setImageResource(R.drawable.flag);
+                            imagenboton.setEnabled(false);
+                            bandera++;
+                            if (num == 8) {
+                            bandera(10,bandera);
+                            }else if (num==12){
+                                bandera(30, bandera);
+                            }else if(num==16){
+                                bandera(60, bandera);
+                            }
+                            return true;
+                        }
+                    });
 
                     //Añadimos dimensiones de las imagenes
                     imagenboton.setMaxHeight(15);
@@ -216,14 +241,13 @@ public class MainActivity extends AppCompatActivity {
      * @param minas
      */
     public void matriz(int tablero, int minas){
-
+        matriz.clear();
         for(int i=0; i<tablero*tablero; i++){
             matriz.add(0);
         }
-        for(int j=0; j<minas; j++){
-            matriz.set(j,-1);
+        for(int l=0; l<minas; l++){
+            matriz.set(l,-1);
         }
-        System.out.println(String.valueOf(matriz));
         Collections.shuffle(matriz);
     }
 
@@ -246,20 +270,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
+        //Evitamos que el usuario pueda seguir jugando si intenta tocar fuera del alert dialog
+        dialog.setCancelable(false);
         dialog.show();
     }
 
     /**
-     * Metodo para mostrar la bandera
-     * @param view
-     * @return
+     * comprobamos que se hayan puesto el mismo numero de banderas que de bombas en los imagebutton
+     * @param bomba
+     * @param banderas
      */
-    public boolean bandera(View view){
-        int id=view.getId();
-        ImageButton ib =findViewById(id);
-        ib.setImageResource(R.drawable.flag);
-        ib.setEnabled(false);
-        return true;
+    public void bandera(int bomba, int banderas){
+        if(bomba==banderas){
+            Toast.makeText(this, "Has ganado", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -278,8 +302,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
+        //Evitamos que el usuario pueda seguir jugando si intenta tocar fuera del alert dialog
+        dialog.setCancelable(false);
         dialog.show();
         return true;
     }
-
 }
