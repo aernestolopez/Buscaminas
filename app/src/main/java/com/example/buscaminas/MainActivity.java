@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Instrucciones");
         builder.setMessage("Esta versión tiene 3 niveles de dificultad que puedes cambiar desde el menú que cambian la extension del tablero." +
-                "\n Para ganar despeja el tablero sin detonar ninguna bomba");
+                "\n Para ganar desarma las bombas utilizando banderas");
         builder.setPositiveButton("Aceptar", null);
 
         AlertDialog dialog = builder.create();
@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                             imagenboton.setImageResource(R.drawable.flag);
                             imagenboton.setEnabled(false);
                             bandera++;
+                            Toast.makeText(MainActivity.this, "Has marcado una mina", Toast.LENGTH_SHORT).show();
                             if (num == 8) {
                             bandera(10,bandera);
                             }else if (num==12){
