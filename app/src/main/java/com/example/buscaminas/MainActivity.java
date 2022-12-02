@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onClick(View v)
                         {
                             boton.setText(""+ matriz.get(finalK));
-
+                            boton.setEnabled(false);
                         }
                     });
 
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
                     //Creamos imagebutton
                     ImageButton imagenboton = new ImageButton(getApplicationContext());
                     imagenboton.setId(View.generateViewId());
-
+                    imagenboton.setImageResource(R.drawable.bomba);
                     //Creamos params
                     TableRow.LayoutParams lpBoton = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                     lpBoton.weight = 1;
@@ -223,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
         for(int j=0; j<minas; j++){
             matriz.set(j,-1);
         }
+        System.out.println(String.valueOf(matriz));
         Collections.shuffle(matriz);
     }
 
@@ -280,4 +281,5 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
         return true;
     }
+
 }
