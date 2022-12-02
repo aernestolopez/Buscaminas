@@ -234,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         int id=view.getId();
         ImageButton ib =findViewById(id);
         ib.setImageResource(R.drawable.bomba);
-       /* AlertDialog.Builder builder = new AlertDialog.Builder(this);
+       AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
        builder.setTitle("Has perdido");
         builder.setMessage("Has detonado una bomba, más suerte la próxima vez");
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.show();*/
+        dialog.show();
     }
 
     /**
