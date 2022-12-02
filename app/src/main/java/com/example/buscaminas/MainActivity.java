@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     //Declaracion de variables
     TableLayout tableLayout;
     ArrayList<Integer> matriz=new ArrayList<Integer>();
-    int cosa=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,18 +102,14 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     matriz(8, 10);
                     crearTabla(8);
-
-
                     break;
                 case 1:
                     matriz(12, 30);
                     crearTabla(12);
-
                     break;
                 case 2:
                     matriz(16,60);
                     crearTabla(16);
-
                     break;
             }
             }
@@ -125,12 +120,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 matriz(8, 10);
                 crearTabla(8);
-
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     /**
