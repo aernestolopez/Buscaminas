@@ -161,8 +161,6 @@ public class MainActivity extends AppCompatActivity {
                     //Asignamos el id
                     boton.setId(View.generateViewId());
 
-                    //Asignamos el numero
-                   //boton.setText(""+matriz.get(k));
                     //Asignamos el tamaño del texto
                     boton.setTextSize(25-num);
 
@@ -224,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Añadimos dimensiones de las imagenes
                     imagenboton.setMaxHeight(15);
-                    imagenboton.setMaxHeight(15);
+                    imagenboton.setMaxWidth(15);
                     imagenboton.setAdjustViewBounds(true);
                     imagenboton.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
