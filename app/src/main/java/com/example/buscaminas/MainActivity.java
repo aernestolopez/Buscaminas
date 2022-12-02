@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     //Creamos imagebutton
                     ImageButton imagenboton = new ImageButton(getApplicationContext());
                     imagenboton.setId(View.generateViewId());
-                    imagenboton.setImageResource(R.drawable.bomba);
+
                     //Creamos params
                     TableRow.LayoutParams lpBoton = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.MATCH_PARENT);
                     lpBoton.weight = 1;
